@@ -5,8 +5,12 @@
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
+    "react-redux": "^7.0.3",
     "react-scripts": "2.1.8",
-    "tachyons": "^4.11.1"
+    "redux": "^4.0.1",
+    "redux-logger": "^3.0.6",
+    "tachyons": "^4.11.1",
+    "typescript": "^3.4.5"
   },
   "scripts": {
     "start": "react-scripts start",

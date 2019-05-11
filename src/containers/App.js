@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from  '../components/Scroll';
 import ErrorBoundary from '../components/ErrorBoundary';
 import './App.css';
 
+import {setSearchField} from '../actions';
+
+const mapStateToProps = state => {
+    return {
+        searchField: state.searchField
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    }
+}
+
 class App  extends Component{
     constructor(){
         super();
         this.state = {
-            robots: [], 
-            searchField: ''};
+            robots: []};
     }
     componentDidMount(){
         fetch('http://jsonplaceholder.typicode.com/users').then(response=>{
@@ -19,12 +33,12 @@ class App  extends Component{
             this.setState({robots: users});
         })
     }
-    onSearchChange = (event) => {
-        this.setState({searchField:event.target.value});
-    }
+
     render(){
-        let filteredRobots = this.state.robots.filter(robot=>{
-            return robot.name.toLowerCase().includes(this.state.searchField.toLowerCase());
+        const {robots} = this.state;
+        const {searchField, onSearchChange} = this.props;
+        let filteredRobots = robots.filter(robot=>{
+            return robot.name.toLowerCase().includes(searchField.toLowerCase());
         })
         if(this.state.robots.length === 0){
             return <h1>Loading...</h1>
@@ -32,7 +46,7 @@ class App  extends Component{
             return (
                 <div className="tc">
                     <h1 className="f1">Robot Friends</h1>
-                    <SearchBox searchChange={this.onSearchChange}/>
+                    <SearchBox searchChange={onSearchChange}/>
                     <Scroll>
                         <ErrorBoundary>
                             <CardList robots={filteredRobots}/>
@@ -44,4 +58,4 @@ class App  extends Component{
     }
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);

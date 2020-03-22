@@ -2,6 +2,7 @@
   "name": "robotfriends",
   "version": "0.1.0",
   "private": true,
+  "homepage" : "/robotfriends/",
   "dependencies": {
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
